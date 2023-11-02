@@ -326,6 +326,49 @@ namespace Microsoft.Azure.Management.Compute
             }
 
             /// <summary>
+            /// Redeploy the dedicated host.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hostGroupName'>
+            /// The name of the dedicated host group.
+            /// </param>
+            /// <param name='hostName'>
+            /// The name of the dedicated host.
+            /// </param>
+            public static void Redeploy(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName)
+            {
+                operations.RedeployAsync(resourceGroupName, hostGroupName, hostName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Redeploy the dedicated host.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hostGroupName'>
+            /// The name of the dedicated host group.
+            /// </param>
+            /// <param name='hostName'>
+            /// The name of the dedicated host.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task RedeployAsync(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.RedeployWithHttpMessagesAsync(resourceGroupName, hostGroupName, hostName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
             /// Lists all available dedicated host sizes to which the specified dedicated
             /// host can be resized. NOTE: The dedicated host sizes provided can be used to
             /// only scale up the existing dedicated host.
@@ -573,6 +616,49 @@ namespace Microsoft.Azure.Management.Compute
             public static async Task BeginRestartAsync(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
             {
                 (await operations.BeginRestartWithHttpMessagesAsync(resourceGroupName, hostGroupName, hostName, null, cancellationToken).ConfigureAwait(false)).Dispose();
+            }
+
+            /// <summary>
+            /// Redeploy the dedicated host.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hostGroupName'>
+            /// The name of the dedicated host group.
+            /// </param>
+            /// <param name='hostName'>
+            /// The name of the dedicated host.
+            /// </param>
+            public static void BeginRedeploy(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName)
+            {
+                operations.BeginRedeployAsync(resourceGroupName, hostGroupName, hostName).GetAwaiter().GetResult();
+            }
+
+            /// <summary>
+            /// Redeploy the dedicated host.
+            /// </summary>
+            /// <param name='operations'>
+            /// The operations group for this extension method.
+            /// </param>
+            /// <param name='resourceGroupName'>
+            /// The name of the resource group.
+            /// </param>
+            /// <param name='hostGroupName'>
+            /// The name of the dedicated host group.
+            /// </param>
+            /// <param name='hostName'>
+            /// The name of the dedicated host.
+            /// </param>
+            /// <param name='cancellationToken'>
+            /// The cancellation token.
+            /// </param>
+            public static async Task BeginRedeployAsync(this IDedicatedHostsOperations operations, string resourceGroupName, string hostGroupName, string hostName, CancellationToken cancellationToken = default(CancellationToken))
+            {
+                (await operations.BeginRedeployWithHttpMessagesAsync(resourceGroupName, hostGroupName, hostName, null, cancellationToken).ConfigureAwait(false)).Dispose();
             }
 
             /// <summary>

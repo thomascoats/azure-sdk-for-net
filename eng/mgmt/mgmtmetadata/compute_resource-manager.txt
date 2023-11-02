@@ -1,15 +1,9 @@
-﻿Installing AutoRest version: v2
+Installing AutoRest version: v2
 AutoRest installed successfully.
 Commencing code generation
 Generating CSharp code
 Executing AutoRest command
-cmd.exe /c autorest.cmd https://github.com/Azure/azure-rest-api-specs/blob/main/specification/compute/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\azure-sdk-for-net\sdk
-Autorest CSharp Version: 2.3.82
-2023-06-29 21:16:41 UTC
-Azure-rest-api-specs repository information
-GitHub fork: Azure
-Branch:      main
-Commit:      0504b27917b797d709e7fa1a660a18989a5f11d6
-AutoRest information
-Requested version: 2.0.4421
-Bootstrapper version:    autorest@3.6.0
+cmd.exe /c autorest.cmd https://github.com/thomascoats/azure-rest-api-specs/blob/thomasCoats/redeploy-api/specification/compute/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\Users\thomascoats\Documents\azure-sdk-for-net\sdk
+Autorest CSharp Version: 2.3.102
+System.Exception: Command cmd.exe /c autorest.cmd https://github.com/thomascoats/azure-rest-api-specs/blob/thomasCoats/redeploy-api/specification/compute/resource-manager/readme.md --csharp --version=2.0.4421 --reflect-api-versions --csharp-sdks-folder=C:\Users\thomascoats\Documents\azure-sdk-for-net\sdk returned System.Diagnostics.Process.ExitCode
+AutoRest code generation for https://github.com/thomascoats/azure-rest-api-specs/blob/thomasCoats/redeploy-api/specification/compute/resource-manager/readme.md failed. Please try again
