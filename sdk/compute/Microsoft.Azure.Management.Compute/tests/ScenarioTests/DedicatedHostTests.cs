@@ -128,6 +128,51 @@ namespace Compute.Tests
         }
 
         [Fact]
+        public void TestDedicatedHostRedeploy()
+        {
+            string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
+            using (MockContext context = MockContext.Start(this.GetType()))
+            {
+                Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", "eastus");
+                EnsureClientsInitialized(context);
+
+                string baseRGName = ComputeManagementTestUtilities.GenerateName(TestPrefix);
+                string rgName = baseRGName + "DH";
+                string dhgName = "DHG-1";
+                string dhName = "DH-1";
+
+                try
+                {
+                    // Create a dedicated host group, then get the dedicated host group and validate that they match
+                    DedicatedHostGroup createdDHG = CreateDedicatedHostGroup(rgName, dhgName, availabilityZone: null);
+                    DedicatedHostGroup returnedDHG = m_CrpClient.DedicatedHostGroups.Get(rgName, dhgName);
+                    ValidateDedicatedHostGroup(createdDHG, returnedDHG);
+
+                    //Create DedicatedHost within the DedicatedHostGroup and validate
+                    var createdDH = CreateDedicatedHost(rgName, dhgName, dhName, "ESv4-Type1");
+                    var returnedDH = m_CrpClient.DedicatedHosts.Get(rgName, dhgName, dhName);
+                    ValidateDedicatedHost(createdDH, returnedDH);
+
+                    // Validate dedicated host group instance view
+                    DedicatedHostGroup returnedDHGWithInstanceView = m_CrpClient.DedicatedHostGroups.Get(rgName, dhgName, InstanceViewTypes.InstanceView);
+                    ValidateDedicatedHostGroupInstanceView(returnedDHGWithInstanceView, createdDH);
+
+                    // Redeploy the DedicatedHost
+                    m_CrpClient.DedicatedHosts.Redeploy(rgName, dhgName, dhName);
+
+                    // Delete DedicatedHost and DedicatedHostGroup
+                    m_CrpClient.DedicatedHosts.Delete(rgName, dhgName, dhName);
+                    m_CrpClient.DedicatedHostGroups.Delete(rgName, dhgName);
+                }
+                finally
+                {
+                    m_ResourcesClient.ResourceGroups.Delete(rgName);
+                    Environment.SetEnvironmentVariable("AZURE_VM_TEST_LOCATION", originalTestLocation);
+                }
+            }
+        }
+
+        [Fact]
         public void TestDedicatedHostRestart()
         {
             string originalTestLocation = Environment.GetEnvironmentVariable("AZURE_VM_TEST_LOCATION");
@@ -171,6 +216,7 @@ namespace Compute.Tests
                 }
             }
         }
+
 
         [Fact]
         public void TestDedicatedHostResize()
